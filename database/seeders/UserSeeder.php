@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         //create user role admin
         DB::table('users')->insert([
-            'name' => 'Rafli Andreansya',
+            'name' => 'Rafli Andreansyah',
             'email' => 'rafli@gmail.com',
             'phone' => '081232720821',
             'password' => Hash::make('amaterasu'),

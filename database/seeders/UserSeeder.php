@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory(100)->create();
+        User::factory(1000)->create();
 
         //create user role admin
         DB::table('users')->insert([

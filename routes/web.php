@@ -17,5 +17,5 @@ Route::middleware(['auth'])->group(function () {
         return view('pages.dashboard',  ['type_menu' => 'dashboard']);
     })->name('home');
 
-    Route::resource('/users', UserController::class);
+    Route::resource('users', UserController::class);
 });

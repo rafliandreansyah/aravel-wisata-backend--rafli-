@@ -24,6 +24,20 @@
             <div class="section-body">
                 <h2 class="section-title">Users</h2>
                 <p class="section-lead">List of users</p>
+                @session('success')
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-success alert-dismissible show fade">
+                                <div class="alert-body">
+                                    <button class="close" data-dismiss="alert">
+                                        <span>&times;</span>
+                                    </button>
+                                    {{ $value }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endsession
 
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">
@@ -31,9 +45,12 @@
                             <div class="card-header">
                                 <h4>Users</h4>
                                 <div class="card-header-form">
-                                    <form>
+                                    <form method="GET" action="{{ route('users.index') }}">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" placeholder="Search" name="keyword"
+                                                @isset($keyword)
+                                                value="{{ $keyword }}"
+                                            @endisset>
                                             <div class="input-group-btn">
                                                 <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                             </div>

@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
     //index
-    public function index(): View
+    public function index(Request $request): View
     {
         $userAuth = Auth::user();
-        $users = DB::table('users')->where('id', '!=', $userAuth->id)->orderBy('id', 'desc')->paginate(10);
+        $keyword = $request->keyword;
+
+        $users = DB::table('users')->where('id', '!=', $userAuth->id)->when($keyword, function (Builder $query, string $keyword) {
+
+            $query->where('name', 'like', "%$keyword%")
+                ->orWhere('email', 'like', "%$keyword%")
+                ->orWhere('phone', 'like', "%$keyword%")
+                ->orWhere('role', 'like', "%$keyword%");
+        })->orderBy('id', 'desc')->paginate(10);
 
         $type_menu = 'users';
 
@@ -23,15 +35,37 @@ class UserController extends Controller
         // ]);
 
         // atau lebih simple menggunakan compact
-        return view('pages.users.index', compact('users', 'type_menu'));
+        return view('pages.users.index', compact('users', 'type_menu', 'keyword'));
     }
 
-    //create
+    //get view create user
     public function create(): View
     {
         return view('pages.users.create', [
             'type_menu' => 'users',
         ]);
+    }
+
+    //post create user
+    public function store(Request $request)
+    {
+        //dd($request);
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users',
+                'phone' => 'nullable|numeric|unique:users',
+                'password' => 'required|confirmed|min:8',
+                'role' => 'required'
+            ]);
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+
+
+        User::create($request->all());
+
+        return redirect()->route('users.index')->with('success', 'Success create user');
     }
 
     //edit

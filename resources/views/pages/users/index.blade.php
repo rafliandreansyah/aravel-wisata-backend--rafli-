@@ -53,89 +53,32 @@
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Irwansyah Saputra</td>
-                                            <td>irwan@gmail.com</td>
-                                            <td>081232720821</td>
-                                            <td>Admin</td>
-                                            <td>2017-01-09</td>
-                                            {{-- <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td> --}}
-                                            {{-- <td><a href="#" class="btn btn-secondary">Detail</a></td> --}}
-                                            <td>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
+                                                <td>{{ $user->phone }}</td>
+                                                <td>{{ $user->role }}</td>
+                                                <td>{{ $user->created_at }}</td>
+                                                <td>
+                                                    <div class="buttons">
+                                                        <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
 
-                                                <div class="buttons">
-                                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Irwansyah Saputra</td>
-                                            <td>irwan@gmail.com</td>
-                                            <td>081232720821</td>
-                                            <td>Admin</td>
-                                            <td>2017-01-09</td>
-                                            {{-- <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td> --}}
-                                            {{-- <td><a href="#" class="btn btn-secondary">Detail</a></td> --}}
-                                            <td>
 
-                                                <div class="buttons">
-                                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Irwansyah Saputra</td>
-                                            <td>irwan@gmail.com</td>
-                                            <td>081232720821</td>
-                                            <td>Admin</td>
-                                            <td>2017-01-09</td>
-                                            {{-- <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td> --}}
-                                            {{-- <td><a href="#" class="btn btn-secondary">Detail</a></td> --}}
-                                            <td>
-
-                                                <div class="buttons">
-                                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Irwansyah Saputra</td>
-                                            <td>irwan@gmail.com</td>
-                                            <td>081232720821</td>
-                                            <td>Admin</td>
-                                            <td>2017-01-09</td>
-                                            {{-- <td>
-                                                <div class="badge badge-success">Active</div>
-                                            </td> --}}
-                                            {{-- <td><a href="#" class="btn btn-secondary">Detail</a></td> --}}
-                                            <td>
-
-                                                <div class="buttons">
-                                                    <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
 
                                     </table>
                                 </div>
                             </div>
                             <div class="card-footer text-right">
                                 <nav class="d-inline-block">
-                                    <ul class="pagination mb-0">
+                                    {{ $users->withQueryString()->links() }}
+                                    {{-- <ul class="pagination mb-0">
                                         <li class="page-item disabled">
                                             <a class="page-link" href="#" tabindex="-1"><i
                                                     class="fas fa-chevron-left"></i></a>
@@ -149,8 +92,9 @@
                                         <li class="page-item">
                                             <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
                                         </li>
-                                    </ul>
+                                    </ul> --}}
                                 </nav>
+
                             </div>
                         </div>
                     </div>

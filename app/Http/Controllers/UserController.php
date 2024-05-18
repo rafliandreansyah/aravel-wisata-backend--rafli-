@@ -8,7 +8,10 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -68,11 +71,57 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Success create user');
     }
 
-    //edit
-    public function edit(): View
+    //get edit user form
+    public function edit(User $user): View
     {
-        return view('pages.users.edit', [
-            'type_menu' => 'users',
-        ]);
+        $type_menu = 'users';
+        return view('pages.users.edit', compact('type_menu', 'user'));
+    }
+
+    //put/patch for edit user
+    public function update(Request $request, User $user)
+    {
+        try {
+
+            if (!$request->filled('password')) {
+                $request->validate([
+                    'name' => 'required|max:255',
+                    'email' => 'required|email',
+                    'phone' => 'nullable|numeric',
+                    'role' => 'required'
+                ]);
+            } else {
+                $request->validate([
+                    'name' => 'required|max:255',
+                    'email' => 'required|email',
+                    'phone' => 'nullable|numeric',
+                    'password' => 'required|confirmed|min:8',
+                    'role' => 'required'
+                ]);
+                $user->password = Hash::make($request->password);
+            }
+
+            if ($user->phone) {
+                $user->phone = $request->phone;
+            }
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->role = $request->role;
+
+            $user->save();
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+
+        return redirect()->route('users.index')->with('success', 'Edit user success');
+    }
+
+    // delete user by id
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'Delete user success');
     }
 }

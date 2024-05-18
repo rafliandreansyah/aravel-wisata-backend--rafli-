@@ -31,39 +31,78 @@
                             <div class="card-header">
                                 <h4>Edit Your User</h4>
                             </div>
-                            <form accept="" action="POST">
+                            <form action="{{ route('users.update', $user) }}" method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Name</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control">
+                                            <input value="{{ old('name', $user->name) }}" type="text"
+                                                class="form-control @error('name') is-invalid @enderror" name="name">
+                                            @error('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
+
                                     </div>
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Email</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control">
+                                            <input value="{{ old('email', $user->email) }}" type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email">
+
+                                            @error('email')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Phone</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control">
+                                            <input value="{{ old('phone', $user->phone) }}" type="phone"
+                                                class="form-control @error('phone') is-invalid @enderror" name="phone">
+                                            @error('phone')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
+
                                     </div>
                                     <div class="form-group row mb-4">
-                                        <label
-                                            class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Password</label>
-                                        <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Confirm
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">New
                                             Password</label>
                                         <div class="col-sm-12 col-md-7">
-                                            <input type="text" class="form-control">
+                                            <input value="{{ old('password') }}" type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                name="password">
+                                            @error('password')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
                                         </div>
+
+                                    </div>
+                                    <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Confirm New
+                                            Password</label>
+                                        <div class="col-sm-12 col-md-7">
+                                            <input value="{{ old('password') }}" type="password"
+                                                class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                name="password_confirmation">
+                                            @error('password_confirmation')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+
                                     </div>
                                     <div class="form-group row mb-4">
                                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Role</label>
@@ -72,17 +111,20 @@
                                                 <div class="selectgroup w-100">
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="role" value="admin"
-                                                            class="selectgroup-input" checked="">
+                                                            class="selectgroup-input"
+                                                            @if (old('role', $user->role) === 'admin') checked @endif>
                                                         <span class="selectgroup-button">ADMIN</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="role" value="staff"
-                                                            class="selectgroup-input">
+                                                            class="selectgroup-input"
+                                                            @if (old('role', $user->role) === 'staff') checked @endif>
                                                         <span class="selectgroup-button">STAFF</span>
                                                     </label>
                                                     <label class="selectgroup-item">
                                                         <input type="radio" name="role" value="user"
-                                                            class="selectgroup-input">
+                                                            class="selectgroup-input"
+                                                            @if (old('role', $user->role) === 'user') checked @endif>
                                                         <span class="selectgroup-button">USER</span>
                                                     </label>
                                                 </div>

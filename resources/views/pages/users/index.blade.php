@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class="section-body">
+            <div class="section-body ">
                 <h2 class="section-title">Users</h2>
                 <p class="section-lead">List of users</p>
                 @session('success')
@@ -71,6 +71,37 @@
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($users as $user)
+                                            <div class="modal fade fixed-top" tabindex="-1" role="dialog"
+                                                data-backdrop="false" id="confirm-delete{{ $user->id }}">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Confirmation</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are you sure you want to delete the user named
+                                                                {{ $user->name }}?</p>
+                                                        </div>
+                                                        <div class="modal-footer bg-whitesmoke br">
+
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <form action="{{ route('users.destroy', $user->id) }}"
+                                                                method="POST">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <input type="hidden" name="_token"
+                                                                    value="{{ csrf_token() }}" />
+                                                                <button class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $user->name }}</td>
@@ -80,8 +111,11 @@
                                                 <td>{{ $user->created_at }}</td>
                                                 <td>
                                                     <div class="buttons">
-                                                        <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                                        <a href="{{ route('users.edit', $user->id) }}"
+                                                            class="btn btn-sm btn-warning">Edit</a>
+                                                        <a href="" class="btn btn-sm btn-danger" data-toggle="modal"
+                                                            data-target="#confirm-delete{{ $user->id }}"
+                                                            data-user-id="{{ $user->id }}">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -95,21 +129,6 @@
                             <div class="card-footer text-right">
                                 <nav class="d-inline-block">
                                     {{ $users->withQueryString()->links() }}
-                                    {{-- <ul class="pagination mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1"><i
-                                                    class="fas fa-chevron-left"></i></a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1 <span
-                                                    class="sr-only">(current)</span></a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">2</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                        </li>
-                                    </ul> --}}
                                 </nav>
 
                             </div>
@@ -118,6 +137,7 @@
                 </div>
             </div>
         </section>
+
     </div>
 @endsection
 

@@ -14,12 +14,20 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(10)->create();
+        //Category::factory(10)->create();
 
         //create category
-        // DB::table('categories')->insert([
-        //     'name' => 'Wisata Keluarga',
-        //     'description' => 'Ticket untuk wisata rombongan keluarga'
-        // ]);
+        DB::table('categories')->insert([
+            'name' => 'Wisata Coban Talun',
+            'description' => 'Category wisata Coban Talun'
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'Wisata Coban Rondo',
+            'description' => 'Category wisata Coban Rondo'
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'Wisata Coban Selecta',
+            'description' => 'Category wisata Selecta'
+        ]);
     }
 }

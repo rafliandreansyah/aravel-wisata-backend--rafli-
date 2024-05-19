@@ -16,6 +16,10 @@
                 <a href="/users" class="nav-link"><i class="fas fa-users"></i><span>Users</span></a>
 
             </li>
+            <li class="nav-item {{ $type_menu === 'categories' ? 'active' : '' }}">
+                <a href="/categories" class="nav-link"><i class="fas fa-layer-group"></i><span>Categories</span></a>
+
+            </li>
         </ul>
 
         <div class="hide-sidebar-mini mt-4 mb-4 p-3">

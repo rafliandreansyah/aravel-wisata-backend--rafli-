@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Query\Builder;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
@@ -20,7 +21,7 @@ class CategoryController extends Controller
     {
         $userAuth = Auth::user();
         $keyword = $request->keyword;
-        $type_menu = 'users';
+        $type_menu = 'categories';
 
         $categories = DB::table('categories')->where('id', '!=', $userAuth->id)->when($keyword, function (Builder $query, string $keyword) {
             $query->where('name', 'like', "%$keyword%");
@@ -32,17 +33,29 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $type_menu = 'categories';
+        return view('pages.categories.create', compact('type_menu'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+            ]);
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+
+
+        Category::create($request->all());
+
+        return redirect()->route('categories.index')->with('success', 'Success create category');
     }
 
     /**

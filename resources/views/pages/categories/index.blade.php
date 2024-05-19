@@ -13,7 +13,7 @@
                 <h1>Users</h1>
 
                 <div class="section-header-button">
-                    <a href="{{ route('users.create') }}" class="btn btn-primary">Create Category</a>
+                    <a href="{{ route('categories.create') }}" class="btn btn-primary">Create Category</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item"><a href="/">Dashboard</a></div>

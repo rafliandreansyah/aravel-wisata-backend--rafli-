@@ -59,27 +59,32 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Category $category): View
     {
-        //
+        $type_menu = 'categories';
+        return view('pages.categories.edit', compact('category', 'type_menu'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(Request $request, Category $category)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+            ]);
+        } catch (ValidationException $e) {
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+        $category->name = $request->name;
+        if ($request->description) {
+            $category->description = $request->description;
+        }
+        $category->save();
+        return redirect()->route('categories.index')->with('success', 'Success edit category');
     }
 
     /**

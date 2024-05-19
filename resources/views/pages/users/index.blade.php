@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Table')
+@section('title', 'Users')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -24,20 +24,7 @@
             <div class="section-body ">
                 <h2 class="section-title">Users</h2>
                 <p class="section-lead">List of users</p>
-                @session('success')
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="alert alert-success alert-dismissible show fade">
-                                <div class="alert-body">
-                                    <button class="close" data-dismiss="alert">
-                                        <span>&times;</span>
-                                    </button>
-                                    {{ $value }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endsession
+                @include('layouts.alert')
 
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-12">

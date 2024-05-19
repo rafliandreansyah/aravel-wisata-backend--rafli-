@@ -89,11 +89,10 @@
 
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Close</button>
-                                                            <form action="{{ route('users.destroy', $category->id) }}"
+                                                            <form action="{{ route('categories.destroy', $category->id) }}"
                                                                 method="POST">
-                                                                <input type="hidden" name="_method" value="DELETE">
-                                                                <input type="hidden" name="_token"
-                                                                    value="{{ csrf_token() }}" />
+                                                                @csrf
+                                                                @method('DELETE')
                                                                 <button class="btn btn-danger">Delete</button>
                                                             </form>
                                                         </div>

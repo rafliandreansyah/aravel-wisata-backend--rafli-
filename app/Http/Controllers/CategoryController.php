@@ -26,7 +26,7 @@ class CategoryController extends Controller
             $query->where('name', 'like', "%$keyword%");
         })->orderBy('id', 'desc')->paginate(10);
 
-        return view('pages.category.index', compact('categories', 'keyword', 'type_menu'));
+        return view('pages.categories.index', compact('categories', 'keyword', 'type_menu'));
     }
 
     /**
@@ -74,6 +74,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index')->with('success', 'Success deleted category');
     }
 }

@@ -12,6 +12,7 @@
                 <a href="/" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
 
             </li>
+            <li class="menu-header">Master</li>
             <li class="nav-item {{ $type_menu === 'users' ? 'active' : '' }}">
                 <a href="/users" class="nav-link"><i class="fas fa-users"></i><span>Users</span></a>
 
@@ -19,6 +20,14 @@
             <li class="nav-item {{ $type_menu === 'categories' ? 'active' : '' }}">
                 <a href="/categories" class="nav-link"><i class="fas fa-layer-group"></i><span>Categories</span></a>
 
+            </li>
+            <li class="nav-item {{ $type_menu === 'products' ? 'active' : '' }}">
+                <a href="/products" class="nav-link"><i class="fas fa-ticket-simple"></i><span>Tickets</span></a>
+
+            </li>
+            <li class="menu-header">Transaction</li>
+            <li class="nav-item {{ $type_menu === 'orders' ? 'active' : '' }}">
+                <a href="/orders" class="nav-link"><i class="fas fa-layer-group"></i><span>Orders</span></a>
             </li>
         </ul>
     </aside>

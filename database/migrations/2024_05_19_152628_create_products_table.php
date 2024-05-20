@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->integer('stock')->default(0);
-            $table->string('image');
-            $table->enum('criteria', ['perorangan', 'rombongan'])->default('perorangan');
+            $table->string('image')->nullable();
+            $table->enum('criteria', ['individual', 'group'])->default('individual');
             $table->enum('status', ['draft', 'publish', 'archived'])->default('publish');
             $table->boolean('favorite')->default(false);
             $table->foreignId('category_id')->constrained();

@@ -14,9 +14,18 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         //create product
-        DB::table('products')->insert([
-            'name' => 'Tiket wisata',
-            ''
-        ]);
+
+        for ($i = 0; $i < 100; $i++) {
+            DB::table('products')->insert([
+                'name' => "Tiket wisata " . ($i + 1),
+                'price' => 20000,
+                'stock' => 190,
+                'image' => '/img/news/img01.jpg',
+                'criteria' => 'individual',
+                'status' => 'publish',
+                'favorite' => false,
+                'category_id' => rand(1, 3),
+            ]);
+        }
     }
 }

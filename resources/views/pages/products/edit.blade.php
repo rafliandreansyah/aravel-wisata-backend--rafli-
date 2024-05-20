@@ -14,7 +14,7 @@
         <section class="section">
             <div class="section-header">
                 <div class="section-header-back">
-                    <a href="/users" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                    <a href="/products" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
                 </div>
                 <h1>Edit New Ticket</h1>
                 <div class="section-header-breadcrumb">
@@ -175,15 +175,27 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    @if ($product->image)
+                                        <div class="form-group row mb-4">
+                                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Latest
+                                                Ticket
+                                                Image</label>
+                                            <div class="col-sm-12 col-md-7">
+                                                <img src="{{ asset("storage/$product->image") }}" alt="image"
+                                                    class="img-fluid rounded" width="250">
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div class="form-group row mb-4">
-                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Ticket
-                                            Image</label>
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">
+                                            @if ($product->image)
+                                                Change
+                                            @endif Ticket
+                                            Image
+                                        </label>
                                         <div class="col-sm-12 col-md-7">
                                             <div id="image-preview" class="image-preview">
                                                 <label for="image-upload" id="image-label">Choose File</label>
-
-
                                                 <input type="file" name="image" id="image-upload"
                                                     @error('image') is-invalid @enderror />
                                                 @error('image')
@@ -192,11 +204,6 @@
                                                     </div>
                                                 @enderror
                                             </div>
-
-                                            @if ($product->image)
-                                                <img src="{{ asset("storage/$product->image") }}" alt="image"
-                                                    class="img-fluid rounded" width="100">
-                                            @endif
                                         </div>
                                     </div>
 

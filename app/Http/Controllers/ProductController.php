@@ -28,10 +28,11 @@ class ProductController extends Controller
 
         $products = Product::where('id', '!=', $userAuth->id)->when($keyword, function (Builder $query, String $keyword) {
             $query->where('name', 'like', "%$keyword%")
-                ->orWhere('criteria', 'like', "%$keyword%");
+                ->orWhere('criteria', 'like', "%$keyword%")
+                ->orWhere('price', 'like', "%$keyword%");
         })->orderBy('favorite', 'desc')->paginate(10);
 
-        return view('pages.products.index', compact('type_menu', 'products'));
+        return view('pages.products.index', compact('type_menu', 'products', 'keyword'));
     }
 
     /**
@@ -110,8 +111,45 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+                'criteria' => 'required',
+                'price' => 'required|numeric|min:0',
+                'category_id' => 'required|numeric',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'favorite' => 'required',
+                'stock' => 'required',
+                'status' => 'required',
+            ]);
+        } catch (ValidationException $e) {
+            dd($e);
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->category_id = $request->category_id;
+        $product->stock = $request->stock;
+        $product->criteria = $request->criteria;
+        $product->status = $request->status;
+        $product->favorite = $request->favorite;
+
+
+        $file = $request->file('image');
+
+        if ($file && $file->getSize()) {
+            $fileName = $product->id . round(Carbon::now()->valueOf());
+            $file->storeAs('public/images/products',  $fileName . '.' . $file->extension());
+            $product->image = 'images/products/' . $fileName . '.' . $file->extension();
+        }
+
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'Success create a new product');
     }
 
     /**

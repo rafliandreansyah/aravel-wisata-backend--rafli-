@@ -102,7 +102,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $type_menu = 'products';
+        $categories = Category::all();
+        return view('pages.products.edit', compact('product', 'type_menu', 'categories'));
     }
 
     /**
@@ -110,7 +112,6 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
     }
 
     /**

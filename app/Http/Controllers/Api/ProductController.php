@@ -20,11 +20,11 @@ class ProductController extends Controller
             $status = ProductStatus::Publish;
         }
 
-        $product = Product::with('category')->without('id')->where('status', $status)->orderBy('favorite', 'desc')->get();
+        $products = Product::with('category')->without('id')->where('status', $status)->orderBy('favorite', 'desc')->get();
 
         return response()->json([
             'status' => ApiStatus::Success,
-            'data' => $product
+            'data' => $products
         ], 200);
     }
 

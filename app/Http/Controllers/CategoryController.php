@@ -23,7 +23,7 @@ class CategoryController extends Controller
         $keyword = $request->keyword;
         $type_menu = 'categories';
 
-        $categories = DB::table('categories')->where('id', '!=', $userAuth->id)->when($keyword, function (Builder $query, string $keyword) {
+        $categories = DB::table('categories')->when($keyword, function (Builder $query, string $keyword) {
             $query->where('name', 'like', "%$keyword%");
         })->orderBy('id', 'desc')->paginate(10);
 

@@ -22,11 +22,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
 
-        $userAuth = Auth::user();
         $keyword = $request->keyword;
         $type_menu = 'products';
 
-        $products = Product::where('id', '!=', $userAuth->id)->when($keyword, function (Builder $query, String $keyword) {
+        $products = Product::when($keyword, function (Builder $query, String $keyword) {
             $query->where('name', 'like', "%$keyword%")
                 ->orWhere('criteria', 'like', "%$keyword%")
                 ->orWhere('price', 'like', "%$keyword%");

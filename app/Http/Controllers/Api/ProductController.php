@@ -67,7 +67,7 @@ class ProductController extends Controller
         if ($file && $file->getSize()) {
             $fileName = $product->id . round(Carbon::now()->valueOf());
             $file->storeAs('public/images/products',  $fileName . '.' . $file->extension());
-            $product->image = 'images/products/' . $fileName . '.' . $file->extension();
+            $product->image = 'storage/images/products/' . $fileName . '.' . $file->extension();
         }
 
         $product->save();
@@ -127,7 +127,7 @@ class ProductController extends Controller
         if ($file && $file->getSize()) {
             $fileName = $product->id . round(Carbon::now()->valueOf());
             $file->storeAs('public/images/products',  $fileName . '.' . $file->extension());
-            $product->image = 'images/products/' . $fileName . '.' . $file->extension();
+            $product->image = 'storage/images/products/' . $fileName . '.' . $file->extension();
         }
 
         $product->save();

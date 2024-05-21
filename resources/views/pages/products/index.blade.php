@@ -94,7 +94,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td><img class="rounded"
-                                                        src="@if ($product->image) {{ asset("storage/$product->image") }} @else {{ asset('img/example-image.jpg') }} @endif"
+                                                        src="@if ($product->image) {{ asset("$product->image") }} @else {{ asset('img/example-image.jpg') }} @endif"
                                                         alt="image" width="50">
                                                 </td>
                                                 <td>{{ $product->name }} @if ($product->favorite)
